@@ -1,4 +1,4 @@
-from os.path import exists, abspath,dirname, join as os_join
+from os.path import abspath,dirname, join as os_join
 from PIL import Image
 from random import randint
 from time import time,gmtime,strftime
@@ -8,13 +8,11 @@ class Klotsk:
     def __init__(self, mode):
         self.cmd_strs = ''
         self.theme = []
-        if exists(f'./src/plugins/klotsk/theme/{mode}{mode}.png'):
-            img = Image.open(f'./src/plugins/klotsk/theme/{mode}{mode}.png')
-        else:
-            module_path = abspath(__file__)
-            dir_path = dirname(module_path)
-            img_path = os_join(dir_path,f'theme/{mode}{mode}.png')
-            img = Image.open(img_path)
+        # 读取主题
+        module_path = abspath(__file__)
+        dir_path = dirname(module_path)
+        img_path = os_join(dir_path,'theme',f'{mode}{mode}.png')
+        img = Image.open(img_path)
         self.sl = 720 / mode
         for i in range(mode):                               # 剪切图片
             for j in range(mode):

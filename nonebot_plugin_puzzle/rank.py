@@ -1,9 +1,12 @@
 import sqlite3
-
+from os.path import abspath,dirname, join as os_join
+module_path = abspath(__file__)
+dir_path = dirname(module_path)
+db_path = os_join(dir_path,'puzzle.sqlite')
 
 def add_point(uid, group_id, name,mode):
     init()
-    conn = sqlite3.connect("puzzle.sqlite")
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     sql = f"select * from sign_in where uid={uid} and belonging_group={group_id} and mode = {mode}"
     data = cursor.execute(sql).fetchall()
@@ -23,7 +26,7 @@ def add_point(uid, group_id, name,mode):
 
 def get_point(group: int, uid: int, mode: int) -> int:
     init()
-    conn = sqlite3.connect("puzzle.sqlite")
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     sql = f'''select * from sign_in where belonging_group={group} and uid={uid} and mode = "{mode}"'''
     cursor.execute(sql)
@@ -36,7 +39,7 @@ def get_point(group: int, uid: int, mode: int) -> int:
 
 
 def init():
-    conn = sqlite3.connect("puzzle.sqlite")
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     sql = """create table if not exists sign_in(
         id integer primary key autoincrement,
@@ -55,7 +58,7 @@ def init():
 
 def get_rank(group_id,mode):
     init()
-    conn = sqlite3.connect("puzzle.sqlite")
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     order_sql = "SELECT * FROM sign_in ORDER BY points"
     data = cursor.execute(order_sql).fetchall()
