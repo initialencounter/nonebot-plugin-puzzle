@@ -72,6 +72,6 @@ def get_rank(group_id,mode):
 
 
 
-if __name__ == '__main__':
-    add_point(29999,2022202,'feng',4)
-    print(get_rank(2022202,4))
+# if __name__ == '__main__':
+#     add_point(29999,2022202,'feng',4)
+#     print(get_rank(2022202,4))

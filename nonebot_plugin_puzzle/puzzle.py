@@ -1,4 +1,4 @@
-from os.path import exists
+from os.path import exists, abspath, join as os_join
 from PIL import Image
 from random import randint
 from time import time,gmtime,strftime
@@ -11,7 +11,9 @@ class Klotsk:
         if exists(f'./src/plugins/klotsk/theme/{mode}{mode}.png'):
             img = Image.open(f'./src/plugins/klotsk/theme/{mode}{mode}.png')
         else:
-            img = Image.open(f'./theme/{mode}{mode}.png')
+            module_path = abspath(__file__)
+            img_path = os_join(module_path,f'theme/{mode}{mode}.png')
+            img = Image.open(img_path)
         self.sl = 720 / mode
         for i in range(mode):                               # 剪切图片
             for j in range(mode):
@@ -108,12 +110,12 @@ class Klotsk:
         image.save(buf, format='png')
 
         return buf
-if __name__ == '__main__':
-    k = Klotsk(5)
-    k.printf()
-    k.Draw_puzzle()
-    k.canvas.save('./theme/test1.png')
-    k.move_sqnc('R')
-    k.Draw_puzzle()
-    k.canvas.save('./theme/test2.png')
+# if __name__ == '__main__':
+#     k = Klotsk(5)
+#     k.printf()
+#     k.Draw_puzzle()
+#     k.canvas.save('./theme/test1.png')
+#     k.move_sqnc('R')
+#     k.Draw_puzzle()
+#     k.canvas.save('./theme/test2.png')
     # 定义一个函数，用于判断数码华容道是否有解
